@@ -1,4 +1,4 @@
-eximstats
+Mailstats.pl
 =========
 
-Eximstats.pl
+Gives a report of recent sent email.
