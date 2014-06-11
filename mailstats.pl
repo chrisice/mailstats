@@ -70,10 +70,10 @@ push (@titles, $title)
 }
 }
 my %count;
-$titlecount{$_}++ foreach @titles;
+$count{$_}++ foreach @titles;
 while (my ($key, $value) = each(%count)) {
 	if ($key eq "" ) {
-		delete($titlecount[$key]);
+		delete($count[$key]);
 }
 }
 
