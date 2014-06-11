@@ -69,15 +69,15 @@ my $title = $2;
 push (@titles, $title)
 }
 }
-my %count;
-$count{$_}++ foreach @titles;
-while (my ($key, $value) = each(%count)) {
+my %titlecount;
+$titlecount{$_}++ foreach @titles;
+while (my ($key, $value) = each(%titlecount)) {
 	if ($key eq "" ) {
-		delete($count[$key]);
+		delete($titlecount[$key]);
 }
 }
 
-while (my ($key, $value) = each(%count)) {
+while (my ($key, $value) = each(%titlecount)) {
 	print "$key:$value\n";
 }
 print "\n\nTotal: " . scalar @titles . "\n";
