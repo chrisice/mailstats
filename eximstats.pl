@@ -18,7 +18,7 @@ push (@system_users, $line_users)
 my %count;
 $count{$_}++ foreach @system_users;
 while (my ($key, $value) = each(%count)) {
-	if ($key == "" ) {
+	if ($key eq "" ) {
 		delete($count{$key});
 }
 }
@@ -44,7 +44,7 @@ push (@email_users, $lines_emails);
 my %email_count;
 $email_count{$_}++ foreach @email_users;
 while (my ($key, $value) = each(%email_count)) {
-	if ($value == 1) {
+	if ($key eq "") {
 		delete($email_count{$key});
 }
 }
@@ -72,7 +72,7 @@ push (@titles, $title)
 my %count;
 $count{$_}++ foreach @titles;
 while (my ($key, $value) = each(%count)) {
-	if ($value == 1 ) {
+	if ($key eq "" ) {
 		delete($count[$key]);
 }
 }
