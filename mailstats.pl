@@ -25,15 +25,15 @@ while (my ($key, $value) = each(%count)) {
 }
 }
 
-#while (my ($key, $value) = each(%count)) {
-#	print "$key:$value\n";
-
 foreach my $value (reverse sort { $count{$a} <=> $count{$b} }  keys %count) {
 print " " . $count{$value} . " : " . $value . "\n";
 }
 
 print "\n";
 print "\nTotal:  " . scalar (@system_users - 1) . "\n";
+
+
+## Section for email accounts
 
 print "\nEmail accounts sending out mail:\n\n";
 
@@ -54,20 +54,16 @@ while (my ($key, $value) = each(%email_count)) {
 }
 }
 
-#while (my ($key, $value) = each(%email_count)) {
-#	print "$key:$value\n\n";
-
 foreach my $value (reverse sort { $email_count{$a} <=> $email_count{$b} }  keys %email_count) {
 print " " . $email_count{$value} . " : " . $value . "\n";
 }
 
-
-
 print "\n";
 print "Total: " . scalar (@email_users - 1). "\n";
 
+# Section for titles 
 
-print "\nEmail Titles:\n\n\n";
+print "\nTop 20 Email Titles:\n\n\n";
 
 @titles = "";
 
@@ -78,8 +74,6 @@ if ( $titles=~/((U=|_login:).+)((?<=T=\").+?(?=\"))(.+$)/i) {
 my $title = $3;
 push (@titles, $title);
 }
-
-
 }
 my %titlecount;
 $titlecount{$_}++ foreach @titles;
@@ -89,11 +83,6 @@ while (my ($key, $value) = each(%titlecount)) {
 }
 }
 
-
-
-#while (my ($key, $value)  = each (%titlecount)) {
-#	print sort "$value : $key\n";
-#
 my $limit = 20;
 my $loops = 0; 
 foreach my $value (reverse sort { $titlecount{$a} <=> $titlecount{$b} }  keys %titlecount) {
@@ -103,6 +92,6 @@ if ($loops >= $limit) {
 	last;
 }
 }
-print "\n\nTotal: " . scalar (@titles - 1) . "\n";
+print "\n\nTotal: " . scalar (@titles - 1) . "\n\n";
 
 close FILE;
