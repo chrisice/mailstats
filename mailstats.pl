@@ -20,17 +20,20 @@ push (@system_users, $line_users)
 my %count;
 $count{$_}++ foreach @system_users;
 while (my ($key, $value) = each(%count)) {
-	if ($key eq "" ) {
+	if ($key =~ /^$/ ) {
 		delete($count{$key});
 }
 }
 
-while (my ($key, $value) = each(%count)) {
-	print "$key:$value\n";
+#while (my ($key, $value) = each(%count)) {
+#	print "$key:$value\n";
+
+foreach my $value (reverse sort { $count{$a} <=> $count{$b} }  keys %count) {
+print " " . $count{$value} . " : " . $value . "\n";
 }
 
 print "\n";
-print "\nTotal:  " . scalar @system_users . "\n";
+print "\nTotal:  " . scalar (@system_users - 1) . "\n";
 
 print "\nEmail accounts sending out mail:\n\n";
 
@@ -38,7 +41,7 @@ open FILE, ("/var/log/exim_mainlog");
 @email_users = "";
 
 while ( $lines_email = <FILE>) {
-if ( $lines_email=~/(_login:)(.+?)(.S=)/i) {
+if ( $lines_email=~/(_login:)(.+?)(\sS=)/i) {
 my $lines_emails = $2;
 push (@email_users, $lines_emails);
 }
@@ -46,17 +49,22 @@ push (@email_users, $lines_emails);
 my %email_count;
 $email_count{$_}++ foreach @email_users;
 while (my ($key, $value) = each(%email_count)) {
-	if ($key eq "") {
+	if ($key =~ /^$/) {
 		delete($email_count{$key});
 }
 }
 
-while (my ($key, $value) = each(%email_count)) {
-	print "$key:$value\n\n";
+#while (my ($key, $value) = each(%email_count)) {
+#	print "$key:$value\n\n";
+
+foreach my $value (reverse sort { $email_count{$a} <=> $email_count{$b} }  keys %email_count) {
+print " " . $email_count{$value} . " : " . $value . "\n";
 }
 
+
+
 print "\n";
-print "Total: " . scalar @email_users . "\n";
+print "Total: " . scalar (@email_users - 1). "\n";
 
 
 print "\nEmail Titles:\n\n\n";
@@ -76,11 +84,16 @@ push (@titles, $title);
 my %titlecount;
 $titlecount{$_}++ foreach @titles;
 while (my ($key, $value) = each(%titlecount)) {
-	if ($key eq "" ) {
+	if ($key =~ /^$/ ) {
 		delete($titlecount[$key]);
 }
 }
 
+
+
+#while (my ($key, $value)  = each (%titlecount)) {
+#	print sort "$value : $key\n";
+#
 my $limit = 20;
 my $loops = 0; 
 foreach my $value (reverse sort { $titlecount{$a} <=> $titlecount{$b} }  keys %titlecount) {
@@ -90,4 +103,6 @@ if ($loops >= $limit) {
 	last;
 }
 }
-print "\n\nTotal: " . scalar @titles . "\n";
+print "\n\nTotal: " . scalar (@titles - 1) . "\n";
+
+close FILE;
