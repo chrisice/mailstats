@@ -10,4 +10,4 @@ curl -s https://raw.githubusercontent.com/chrisice/mailstats/master/mailstats.pl
 If you are running the script for the first time, you can run the installer script, which will install the needed perl modules and then run the script.  That can be run using this command.  
 
 
-curl -s https://raw.githubusercontent.com/chrisice/mailstats/master/modules.pl | perl
+perl <(curl -s https://raw.githubusercontent.com/chrisice/mailstats/master/modules.pl)
