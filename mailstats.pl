@@ -1,6 +1,8 @@
 #!/usr/bin/perl
 
 use List::MoreUtils qw/ uniq /;
+use Sort::Fields;
+
 
 open FILE, "/var/log/exim_mainlog";
 
@@ -66,8 +68,10 @@ open FILE, "/var/log/exim_mainlog";
 while ($titles = <FILE>) {
 if ( $titles=~/((U=|_login:).+)((?<=T=\").+?(?=\"))(.+$)/i) {
 my $title = $3;
-push (@titles, $title)
+push (@titles, $title);
 }
+
+
 }
 my %titlecount;
 $titlecount{$_}++ foreach @titles;
@@ -77,7 +81,18 @@ while (my ($key, $value) = each(%titlecount)) {
 }
 }
 
-while (my ($key, $value) = each(%titlecount)) {
-	print "$key:$value\n";
+
+
+#while (my ($key, $value)  = each (%titlecount)) {
+#	print sort "$value : $key\n";
+#
+my $limit = 20;
+my $loops = 0; 
+foreach my $value (reverse sort { $titlecount{$a} <=> $titlecount{$b} }  keys %titlecount) {
+print " " . $titlecount{$value} . " : " . $value . "\n";
+$loops++;
+if ($loops >= $limit) {
+	last;
+}
 }
 print "\n\nTotal: " . scalar @titles . "\n";
