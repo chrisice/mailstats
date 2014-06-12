@@ -6,7 +6,7 @@ use Sort::Fields;
 
 open FILE, "/var/log/exim_mainlog";
 
-#section for system users
+## section for system users
 
 print "\nEmails by user:\n\n";
 our @system_users = "";
@@ -37,7 +37,8 @@ print "\nTotal:  " . scalar (@system_users - 1) . "\n";
 
 print "\nEmail accounts sending out mail:\n\n";
 
-open FILE, ("/var/log/exim_mainlog");
+open FILE, "/var/log/exim_mainlog";
+
 @email_users = "";
 
 while ( $lines_email = <FILE>) {
@@ -61,13 +62,53 @@ print " " . $email_count{$value} . " : " . $value . "\n";
 print "\n";
 print "Total: " . scalar (@email_users - 1). "\n";
 
-# Section for titles 
+
+## Section for current working directories
+
+
+print "\nCurrent working directories:\n\n\n";
+
+open FILE, "/var/log/exim_mainlog";
+@dirs = "";
+
+
+while ($dirs = <FILE>) {
+if ( $dirs=~/(cwd=)(.+?)(\s)/i) {
+my $dir = $2;
+push (@dirs, $dir);
+}
+}
+my %dirs;
+$dirs{$_}++ foreach @dirs;
+while (my ($key, $value) = each(%dirs)) {
+        if ($key =~ /^$/ ) {
+                delete($dirs[$key]);
+}
+}
+ 
+while (my ($key, $value) = each(%dirs)) {
+        if ($key =~ /^$/) {
+                delete($dirs{$key});
+}
+}
+
+foreach my $value (reverse sort { $dirs{$a} <=> $dirs{$b} }  keys %dirs) {
+print " " . $dirs{$value} . " : " . $value . "\n";
+}
+
+print "\n";
+print "Total: " . scalar (@dirs - 1). "\n";
+
+
+
+## Section for titles 
 
 print "\nTop 20 Email Titles:\n\n\n";
 
+open FILE, "/var/log/exim_mainlog";
+
 @titles = "";
 
-open FILE, "/var/log/exim_mainlog";
 
 while ($titles = <FILE>) {
 if ( $titles=~/((U=|_login:).+)((?<=T=\").+?(?=\"))(.+$)/i) {
