@@ -64,8 +64,8 @@ print "\nEmail Titles:\n\n\n";
 open FILE, "/var/log/exim_mainlog";
 
 while ($titles = <FILE>) {
-if ( $titles=~/(T=\")(.+?)(\")/i) {
-my $title = $2;
+if ( $titles=~/((U=|_login:).+)((?<=T=\").+?(?=\"))(.+$)/i) {
+my $title = $3;
 push (@titles, $title)
 }
 }
