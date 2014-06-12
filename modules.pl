@@ -5,17 +5,17 @@ if (-e $module1){
 print "\n\nSort::Fields module already installed.  Continuing\n\n";
 }
 else{
-print "Sort::Fields module not installed.  Would you like to install it now?  (y/n) ";
+print "\n\nSort::Fields module not installed.  Would you like to install it now?  (y/n) ";
 $yn = <STDIN>;
 	if ($yn =~ /y/){
         system("/scripts/perlinstaller Sort::Fields");
 }
         elsif ($yn =~ /n/) {
-        die "Script cannot run without the required modules.  Stopping\n";
+        die "\n\nScript cannot run without the required modules.  Stopping\n";
 }
         elsif ( ($yn =~ /y/) && ($yn =~ /n/) ){
 
-        die "Must choose y or n.  Stopping";
+        die "\n\nMust choose y or n.  Stopping\n\n";
 }
 }
 
@@ -24,16 +24,16 @@ if (-e $module2){
 print "\n\n\nList::MoreUtils module already installed.  Continuing\n\n";
 }
 else{
-print "List::MoreUtils module not installed.  Would you like to install it now?  (y/n) ";
+print "\n\nList::MoreUtils module not installed.  Would you like to install it now?  (y/n) ";
 $yn2 = <STDIN>;
         if ($yn2 =~ /y/){
         system("/scripts/perlinstaller List::MoreUtils");
 }
         elsif ($yn2 =~ /n/) {
-        die "Script cannot run without the required modules.  Stopping";
+        die "\n\nScript cannot run without the required modules.  Stopping\n\n";
 }
         elsif ( ($yn2 =~ /y/) && ($yn2 =~ /n/) ){
-        die "Must choose y or n.  Stopping";
+        die "\n\nMust choose y or n.  Stopping\n\n";
 }
 }
 print "\n\n\nFishing installing modules.  Running script\n\n\n";
