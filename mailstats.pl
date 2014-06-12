@@ -81,11 +81,6 @@ while (my ($key, $value) = each(%titlecount)) {
 }
 }
 
-
-
-#while (my ($key, $value)  = each (%titlecount)) {
-#	print sort "$value : $key\n";
-#
 my $limit = 20;
 my $loops = 0; 
 foreach my $value (reverse sort { $titlecount{$a} <=> $titlecount{$b} }  keys %titlecount) {
