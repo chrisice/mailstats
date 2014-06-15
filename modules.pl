@@ -39,13 +39,13 @@ $yn2 = <STDIN>;
 
 my $module3 = '/usr/local/lib64/perl5/PerlIO/gzip.pm';
 if (-e $module3){
-print "\n\n\nPerlIO::Gzip module already installed.  Continuing\n\n";
+print "\n\n\nPerlIO::gzip module already installed.  Continuing\n\n";
 }
 else{
-print "\n\n\nPerlIO::Gzip module not installed.  Would you like to install it now?  (y/n)";
+print "\n\n\nPerlIO::gzip module not installed.  Would you like to install it now?  (y/n)";
 $yn3 = <STDIN>;
         if ($yn3 =~ /y/){
-        system("/scripts/perlinstaller PerlIO::Gzip");
+        system("/scripts/perlinstaller PerlIO::gzip");
 }
         elsif ($yn3 =~ /n/) {
         die "\n\nScript cannot run without the required modules.  Stopping\n\n";
