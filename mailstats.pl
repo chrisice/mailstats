@@ -2,13 +2,15 @@
 
 use List::MoreUtils qw/ uniq /;
 use Sort::Fields;
-
+use Term::ANSIColor;
 
 open FILE, "/var/log/exim_mainlog";
 
 ## section for system users
 
+print color 'red';
 print "\nEmails by user:\n\n";
+print color 'reset';
 our @system_users = "";
 
 while ( $lines_users = <FILE> ){
@@ -30,13 +32,14 @@ print " " . $count{$value} . " : " . $value . "\n";
 }
 
 print "\n";
-print "\nTotal:  " . scalar (@system_users - 1) . "\n";
-
+print colored ['red on_blue'], "\nTotal:  " . scalar (@system_users - 1);
+print "\n";
 
 ## Section for email accounts
 
+print color 'red';
 print "\nEmail accounts sending out mail:\n\n";
-
+print color 'reset';
 open FILE, "/var/log/exim_mainlog";
 
 @email_users = "";
@@ -60,14 +63,14 @@ print " " . $email_count{$value} . " : " . $value . "\n";
 }
 
 print "\n";
-print "Total: " . scalar (@email_users - 1). "\n";
-
+print colored ['red on_blue'], "Total: " . scalar (@email_users - 1);
+print "\n";
 
 ## Section for current working directories
 
-
+print color 'red';
 print "\nCurrent working directories:\n\n\n";
-
+print color 'reset';
 open FILE, "/var/log/exim_mainlog";
 @dirs = "";
 
@@ -97,14 +100,14 @@ print " " . $dirs{$value} . " : " . $value . "\n";
 }
 
 print "\n";
-print "Total: " . scalar (@dirs - 1). "\n";
-
-
+print colored ['red on_blue'], "Total: " . scalar (@dirs - 1);
+print "\n";
 
 ## Section for titles 
 
+print color 'red';
 print "\nTop 20 Email Titles:\n\n\n";
-
+print color 'reset';
 open FILE, "/var/log/exim_mainlog";
 
 @titles = "";
@@ -133,6 +136,7 @@ if ($loops >= $limit) {
 	last;
 }
 }
-print "\n\nTotal: " . scalar (@titles - 1) . "\n\n";
-
+print "\n\n";
+print colored ['red on_blue'], "Total: " . scalar (@titles - 1);
+print "\n\n";
 close FILE;
