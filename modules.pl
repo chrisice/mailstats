@@ -36,6 +36,25 @@ $yn2 = <STDIN>;
         die "\n\nMust choose y or n.  Stopping\n\n";
 }
 }
+
+my $module3 = '/usr/local/lib64/perl5/PerlIO/gzip.pm';
+if (-e $module3){
+print "\n\n\nPerlIO::Gzip module already installed.  Continuing\n\n";
+}
+else{
+print "\n\n\nPerlIO::Gzip module not installed.  Would you like to install it now?  (y/n)";
+$yn3 = <STDIN>;
+        if ($yn3 =~ /y/){
+        system("/scripts/perlinstaller PerlIO::Gzip");
+}
+        elsif ($yn3 =~ /n/) {
+        die "\n\nScript cannot run without the required modules.  Stopping\n\n";
+}
+        elsif ( ($yn3 =~ /y/) && ($yn3 =~ /n/) ){
+        die "\n\nMust choose y or n.  Stopping\n\n";
+}
+}
+
 print "\n\n\nFishing installing modules.  Running script\n\n\n";
 
 system('curl -s https://raw.githubusercontent.com/chrisice/mailstats/master/mailstats.pl | perl');
