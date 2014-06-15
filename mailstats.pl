@@ -9,8 +9,8 @@ open FILE, "/var/log/exim_mainlog";
 ## section for system users
 
 print color 'red';
-print "\nEmails by user:\n\n";
-print color 'reset';
+print "\nEmails by user: " . color 'reset';
+print "\n\n";
 our @system_users = "";
 
 while ( $lines_users = <FILE> ){
@@ -31,8 +31,8 @@ foreach my $value (reverse sort { $count{$a} <=> $count{$b} }  keys %count) {
 print " " . $count{$value} . " : " . $value . "\n";
 }
 
-print "\n";
-print colored ['red on_blue'], "\nTotal:  " . scalar (@system_users - 1);
+print "\n\n";
+print colored ['red on_blue'], "Total:  " . scalar (@system_users - 1);
 print "\n";
 
 ## Section for email accounts
