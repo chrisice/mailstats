@@ -3,8 +3,36 @@
 use List::MoreUtils qw/ uniq /;
 use Sort::Fields;
 use Term::ANSIColor;
+use Getopt::Std;
+use PerlIO::gzip;
 
+my %options=();
+getopts("he", \%options);
+
+if ($options{h})
+{
+ do_help();
+}
+
+sub do_help {
+	print "\nMailStats.pl - By Chris Ice\n\n";
+	print "Run with no flags to parse /var/log/exim_mainlog\n\n";
+	print "Usage: \n\n";
+	print "-h : Show this help text\n";
+	print "-e : Check extended logs - Does not check /var/log/exim_mainlog, just the gzipped files\n";
+	print "\n\n\n";
+	die "\n";
+}
+
+if ($options{e}) {
+my @files = </var/log/exim_mainlog*.gz>;
+foreach (@files) {
+open FILE, "<:gzip", $_ or die $!;
+}
+}
+else {
 open FILE, "/var/log/exim_mainlog";
+}
 
 ## section for system users
 
@@ -40,8 +68,15 @@ print "\n";
 print color 'red';
 print "\nEmail accounts sending out mail:\n\n";
 print color 'reset';
+if ($options{e}) {
+my @files = </var/log/exim_mainlog*.gz>;
+foreach (@files) {
+open FILE, "<:gzip", $_ or die $!;
+}
+}
+else {
 open FILE, "/var/log/exim_mainlog";
-
+}
 @email_users = "";
 
 while ( $lines_email = <FILE>) {
@@ -71,7 +106,15 @@ print "\n";
 print color 'red';
 print "\nCurrent working directories:\n\n\n";
 print color 'reset';
+if ($options{e}) {
+my @files = </var/log/exim_mainlog*.gz>;
+foreach (@files) {
+open FILE, "<:gzip", $_ or die $!;
+}
+}
+else {
 open FILE, "/var/log/exim_mainlog";
+}
 @dirs = "";
 
 
@@ -108,8 +151,15 @@ print "\n";
 print color 'red';
 print "\nTop 20 Email Titles:\n\n\n";
 print color 'reset';
+if ($options{e}) {
+my @files = </var/log/exim_mainlog*.gz>;
+foreach (@files) {
+open FILE, "<:gzip", $_ or die $!;
+}
+}
+else {
 open FILE, "/var/log/exim_mainlog";
-
+}
 @titles = "";
 
 
