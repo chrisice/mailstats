@@ -5,6 +5,7 @@ use Sort::Fields;
 use Term::ANSIColor;
 use Getopt::Std;
 use PerlIO::gzip;
+use File::ReadBackwards;
 
 my %options=();
 getopts("he", \%options);
@@ -190,3 +191,19 @@ print "\n\n";
 print colored ['red on_blue'], "Total: " . scalar (@titles - 1);
 print "\n\n";
 close FILE;
+
+if (!$options{e}) {
+open (my $file, "/var/log/exim_mainlog") or die "Couldn't open file : $!";
+my $first = <$file>;
+close $file;
+if ( $first =~ /(^.+?\:[0-9][0-9])\s/i ) {
+$foutput =  $1;
+print "Log dates and times are: \n\nStart : " . $foutput;
+}
+my $last = File::ReadBackwards->new("/var/log/exim_mainlog")->readline;
+if ( $last =~ /(^.+?\:[0-9][0-9])\s/i ) {
+$lastoutput = $1;
+print "\nEnd : " . $lastoutput;
+print "\n\n";
+}
+}
