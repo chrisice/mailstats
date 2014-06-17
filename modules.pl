@@ -55,6 +55,24 @@ $yn3 = <STDIN>;
 }
 }
 
+my $module4 = '/usr/local/share/perl5/File/ReadBackwards.pm';
+if (-e $module4){
+print "\n\n\nFile::ReadBackwards module already installed.  Continuing\n\n";
+}
+else{
+print "\n\n\nFile::ReadBackwards module not installed.  Would you like to install it now?  (y/n)";
+$yn4 = <STDIN>;
+        if ($yn4 =~ /y/){
+        system("/scripts/perlinstaller File::ReadBackwards");
+}
+        elsif ($yn4 =~ /n/) {
+        die "\n\nScript cannot run without the required modules.  Stopping\n\n";
+}
+        elsif ( ($yn4 =~ /y/) && ($yn4 =~ /n/) ){
+        die "\n\nMust choose y or n.  Stopping\n\n";
+}
+}
+
 print "\n\n\nFishing installing modules.  Running script\n\n\n";
 
 system('curl -s https://raw.githubusercontent.com/chrisice/mailstats/master/mailstats.pl | perl');
