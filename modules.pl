@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 
 my $module1 = '/usr/local/share/perl5/Sort/Fields.pm';
-if (-e $module1){
+my $module12 = '/usr/lib/perl5/site_perl/5.8.8/Sort/Fields.pm';
+if ((-e $module1) || (-e $module12)){
 print "\n\nSort::Fields module already installed.  Continuing\n\n";
 }
 else{
@@ -20,7 +21,8 @@ $yn = <STDIN>;
 }
 
 my $module2 = '/usr/local/lib64/perl5/List/MoreUtils.pm';
-if (-e $module2){
+my $module21 = '/usr/lib64/perl5/site_perl/5.8.8/x86_64-linux-thread-multi/List/MoreUtils.pm';
+if ((-e $module2) || (-e $module21)){
 print "\n\n\nList::MoreUtils module already installed.  Continuing\n\n";
 }
 else{
@@ -38,7 +40,8 @@ $yn2 = <STDIN>;
 }
 
 my $module3 = '/usr/local/lib64/perl5/PerlIO/gzip.pm';
-if (-e $module3){
+my $module31 = '/usr/lib64/perl5/site_perl/5.8.8/x86_64-linux-thread-multi/PerlIO/gzip.pm';
+if ((-e $module3) || (-e $module31)){
 print "\n\n\nPerlIO::gzip module already installed.  Continuing\n\n";
 }
 else{
@@ -56,7 +59,8 @@ $yn3 = <STDIN>;
 }
 
 my $module4 = '/usr/local/share/perl5/File/ReadBackwards.pm';
-if (-e $module4){
+my $module41 = '/usr/lib/perl5/site_perl/5.8.8/File/ReadBackwards.pm';
+if ((-e $module4) || (-e $module41)) {
 print "\n\n\nFile::ReadBackwards module already installed.  Continuing\n\n";
 }
 else{
