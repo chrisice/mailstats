@@ -81,7 +81,7 @@ open FILE, "/var/log/exim_mainlog";
 @email_users = "";
 
 while ( $lines_email = <FILE>) {
-if (( $lines_email=~/_login:(.+?)(\sS=)/i) || ($lines_email=~/_plain:(.+?)(\sS=)/i)){
+if ( $lines_email=~/(_login:|_plain:).+?(S=)/i) {
 my $lines_emails = $1;
 push (@email_users, $lines_emails);
 }
