@@ -151,15 +151,16 @@ print "\n";
 
 print color 'red';
 print "\nTop 20 Email Titles:\n\n\n";
+$gzip = </var/log/exim_mainlog*.gz>;
 print color 'reset';
-if ($options{e}) {
+if (($options{e}) && (-e $gzip )){
 my @files = </var/log/exim_mainlog*.gz>;
 foreach (@files) {
 open FILE, "<:gzip", $_ or die $!;
 }
 }
 else {
-open FILE, "/var/log/exim_mainlog";
+open FILE, </var/log/exim_mainlog*>;
 }
 @titles = "";
 
