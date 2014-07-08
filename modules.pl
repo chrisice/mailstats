@@ -2,7 +2,8 @@
 
 my $module1 = '/usr/local/share/perl5/Sort/Fields.pm';
 my $module12 = '/usr/lib/perl5/site_perl/5.8.8/Sort/Fields.pm';
-if ((-e $module1) || (-e $module12)){
+my $module13 = '/usr/local/lib/perl5/site_perl/5.8.8/Sort/Fields.pm';
+if ((-e $module1) || (-e $module12) || (-e $module13)) {
 print "\n\nSort::Fields module already installed.  Continuing\n\n";
 }
 else{
