@@ -1,41 +1,10 @@
 #!/usr/bin/perl
 
-use List::MoreUtils qw/ uniq /;
-use Sort::Fields;
-use Term::ANSIColor;
 use Getopt::Std;
-use PerlIO::gzip;
-use File::ReadBackwards;
+use Term::ANSIColor;
 
-my %options=();
-getopts("he", \%options);
-
-if ($options{h})
-{
- do_help();
-}
-
-sub do_help {
-	print "\nMailStats.pl - By Chris Ice\n\n";
-	print "Run with no flags to parse /var/log/exim_mainlog\n\n";
-	print "Usage: \n\n";
-	print "-h : Show this help text\n";
-	print "-e : Check extended logs - Does not check /var/log/exim_mainlog, just the gzipped files\n";
-	print "\n\n\n";
-	die "\n";
-}
-
-if ($options{e}) {
-my @files = </var/log/exim_mainlog*.gz>;
-foreach (@files) {
-open FILE, "<:gzip", $_ or die $!;
-}
-}
-else {
+sub sent_email {
 open FILE, "/var/log/exim_mainlog";
-}
-
-## section for system users
 
 print color 'red';
 print "\nEmails by user: " . color 'reset';
@@ -64,22 +33,13 @@ print "\n\n";
 print colored ['red on_blue'], "Total:  " . scalar (@system_users - 1);
 print "\n";
 
-## Section for email accounts
+
 
 print color 'red';
 print "\nEmail accounts sending out mail:\n\n";
 print color 'reset';
-if ($options{e}) {
-my @files = </var/log/exim_mainlog*.gz>;
-foreach (@files) {
-open FILE, "<:gzip", $_ or die $!;
-}
-}
-else {
-open FILE, "/var/log/exim_mainlog";
-}
-@email_users = "";
 
+open FILE, "/var/log/exim_mainlog";
 while ( $lines_email = <FILE>) {
 if ( $lines_email=~/(_login:|_plain:)(.+?)(\sS=)/i) {
 my $lines_emails = $2;
@@ -99,25 +59,20 @@ print " " . $email_count{$value} . " : " . $value . "\n";
 }
 
 print "\n";
-print colored ['red on_blue'], "Total: " . scalar (@email_users - 1);
+print colored ['red on_blue'], "Total: " . scalar (@email_users);
 print "\n";
+
+
 
 ## Section for current working directories
 
 print color 'red';
 print "\nCurrent working directories:\n\n\n";
 print color 'reset';
-if ($options{e}) {
-my @files = </var/log/exim_mainlog*.gz>;
-foreach (@files) {
-open FILE, "<:gzip", $_ or die $!;
-}
-}
-else {
-open FILE, "/var/log/exim_mainlog";
-}
-@dirs = "";
 
+
+open FILE, "/var/log/exim_mainlog";
+@dirs;
 
 while ($dirs = <FILE>) {
 if ( $dirs=~/(cwd=)(.+?)(\s)/i) {
@@ -147,22 +102,14 @@ print "\n";
 print colored ['red on_blue'], "Total: " . scalar (@dirs - 1);
 print "\n";
 
-## Section for titles 
+
 
 print color 'red';
 print "\nTop 20 Email Titles:\n\n\n";
 print color 'reset';
-if ($options{e}) {
-my @files = </var/log/exim_mainlog*.gz>;
-foreach (@files) {
-open FILE, "<:gzip", $_ or die $!;
-}
-}
-else {
-open FILE, "/var/log/exim_mainlog";
-}
-@titles = "";
 
+open FILE, "/var/log/exim_mainlog";
+@titles;
 
 while ($titles = <FILE>) {
 if ( $titles=~/((U=|_login:).+)((?<=T=\").+?(?=\"))(.+$)/i) {
@@ -191,19 +138,6 @@ print "\n\n";
 print colored ['red on_blue'], "Total: " . scalar (@titles - 1);
 print "\n\n";
 close FILE;
+}
 
-if (!$options{e}) {
-open (my $file, "/var/log/exim_mainlog") or die "Couldn't open file : $!";
-my $first = <$file>;
-close $file;
-if ( $first =~ /(^.+?\:[0-9][0-9])\s/i ) {
-$foutput =  $1;
-print "Log dates and times are: \n\nStart : " . $foutput;
-}
-my $last = File::ReadBackwards->new("/var/log/exim_mainlog")->readline;
-if ( $last =~ /(^.+?\:[0-9][0-9])\s/i ) {
-$lastoutput = $1;
-print "\nEnd : " . $lastoutput;
-print "\n\n";
-}
-}
+sent_email();
