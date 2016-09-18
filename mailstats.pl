@@ -150,7 +150,7 @@ print "\n";
 ## Section for titles 
 
 print color 'red';
-print "\nTop 20 Email Titles:\n\n\n";
+print "\nTop 50 Email Titles:\n\n\n";
 print color 'reset';
 if ($options{e}) {
 my @files = </var/log/exim_mainlog*.gz>;
@@ -178,7 +178,7 @@ while (my ($key, $value) = each(%titlecount)) {
 }
 }
 
-my $limit = 20;
+my $limit = 50;
 my $loops = 0; 
 foreach my $value (reverse sort { $titlecount{$a} <=> $titlecount{$b} }  keys %titlecount) {
 print " " . $titlecount{$value} . " : " . $value . "\n";
